@@ -3,7 +3,8 @@ const Footer = () => {
     <footer className="p-10 pb-5 bg-base-300 text-base-content">
       <div className="footer">
         <div className="lg:mt-14">
-          <h2 className="text-3xl font-bold">@Summer Camp</h2>
+          {/* todo: add img  */}
+          <h2 className="text-3xl font-bold"></h2>
         </div>
         <div>
           <span className="footer-title">Services</span>
