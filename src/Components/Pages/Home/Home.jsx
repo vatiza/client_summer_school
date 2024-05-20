@@ -1,12 +1,13 @@
 import Slider from "./Slider/Slider";
 
-
 const Home = () => {
-    return (
-        <div>
+  return (
+    <div>
+      <div className="backdrop-invert-0">
         <Slider></Slider>
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Home;
