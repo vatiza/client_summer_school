@@ -3,10 +3,11 @@ import { GiTeacher } from "react-icons/gi";
 import { Rating } from "@smastrom/react-rating";
 
 import "@smastrom/react-rating/style.css";
+import { Link } from "react-router-dom";
 
 const CourseCard = ({ course }) => {
-  const { img, name, instructor_name, price, rating, description } = course;
-  console.log(course);
+  const { img, name, _id, instructor_name, price, rating, description } =
+    course;
   return (
     <div className="card sm:w-10 lg:w-96 bg-base-100 rounded-xl border m-5 shadow-xl">
       <figure>
@@ -26,8 +27,13 @@ const CourseCard = ({ course }) => {
           {instructor_name}
         </p>
 
-        <button className="btn  btn-warning btn-outline">View Details</button>
-        <Rating style={{ maxWidth: 180 }} value={rating} readOnly />
+        <Link
+          to={`/coursesdetails/${_id}`}
+          className="btn  btn-warning btn-outline"
+        >
+          View Details
+        </Link>
+        <Rating style={{ maxWidth: 130 }} value={rating} readOnly />
       </div>
     </div>
   );
