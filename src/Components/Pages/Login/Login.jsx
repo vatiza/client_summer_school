@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { VscEyeClosed } from "react-icons/vsc";
 import toast, { Toaster } from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 import { AuthContex } from "../../../Provider/AuthProvier";
 
@@ -11,6 +11,9 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { loginwithemailpass } = useContext(AuthContex);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  
 
   const {
     register,
@@ -25,7 +28,7 @@ const Login = () => {
         const newuser = result.user;
         console.log(newuser);
         toast.success("Login Success");
-        navigate("/");  
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         toast.error("Login Faild.");

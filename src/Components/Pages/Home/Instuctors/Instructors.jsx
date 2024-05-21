@@ -6,7 +6,7 @@ const Instructors = () => {
   const [allInstructors, setAllInstructors] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/instructor")
+      .get("https://server-summer-school.vercel.app/instructor")
       .then((data) => setAllInstructors(data.data));
   }, []);
   return (

@@ -4,6 +4,7 @@ import { AuthContex } from "../../../Provider/AuthProvier";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContex);
+  console.log(user);
   const handleLogout = () => {
     logOut().then(() => {});
   };
@@ -92,7 +93,7 @@ const Navbar = () => {
                 <div className="w-10 rounded-full">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                    src={user?.photoURL}
                   />
                 </div>
               </div>
@@ -102,7 +103,7 @@ const Navbar = () => {
               >
                 <li>
                   <a className="justify-between">
-                    Profile
+                    {user?.displayName}
                     <span className="badge">New</span>
                   </a>
                 </li>

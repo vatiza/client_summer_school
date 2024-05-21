@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Registration from "../Pages/Registration/Registration";
 import Instructors from "../Pages/Home/Instuctors/Instructors";
 import CourseDetails from "../Pages/Card/AllCourse/CourseDetails";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,14 @@ const router = createBrowserRouter([
       },
       { path: "/login", element: <Login></Login> },
       { path: "/registration", element: <Registration> </Registration> },
-      { path: "/coursesdetails/:id", element: <CourseDetails></CourseDetails> },
+      {
+        path: "/coursesdetails/:id",
+        element: (
+          <PrivateRoutes>
+            <CourseDetails></CourseDetails>
+          </PrivateRoutes>
+        ),
+      },
       {
         path: "/instructors",
         element: <Instructors></Instructors>,
