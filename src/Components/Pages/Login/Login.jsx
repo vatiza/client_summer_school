@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { VscEyeClosed } from "react-icons/vsc";
+import toast, { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
-
+import { AuthContex } from "../../../Provider/AuthProvier";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [loginErr, setLoginErr] = useState("");
-
+  const { createAccount } = useContext(AuthContex);
+  
 
   const {
     register,
@@ -18,11 +19,21 @@ const Login = () => {
   } = useForm({ defaultValues: { email: undefined, password: undefined } });
   const onSubmit = (data) => {
     console.log(data);
-    setLoginErr("");
+
+    createAccount(data.email, data.password)
+      .then((result) => {
+        const newuser = result.user;
+        console.log(newuser);
+        toast.success("Login Success");
+      })
+      .catch((error) => {
+        toast.error("Login Faild.");  
+        console.log(error.message);
+      });
   };
 
   return (
-<>
+    <>
       <Helmet>
         <title>Camp | Login</title>
       </Helmet>
@@ -106,9 +117,9 @@ const Login = () => {
           <hr className="border mt-5" />
           <SocialLogin></SocialLogin>
         </div>
-        {loginErr && <p className="text-red-500 my-10">{loginErr}</p>}
       </section>
-</>
+      <Toaster />
+    </>
   );
 };
 

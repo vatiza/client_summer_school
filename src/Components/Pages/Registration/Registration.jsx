@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
 const Registration = () => {
-  const [error, setError] = useState("");
   const {
     register,
     handleSubmit,
@@ -14,11 +12,26 @@ const Registration = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    console.log(import.meta.env.VITE_IMGBB_API_KEY);
+    const url = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_IMGBB_API_KEY
+    }`;
+    fetch(url, { method: "POST", body: formData })
+      .then((res) => res.json())
+      .then((img) => {
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div>
       <Helmet>
-        <title>Shutter Safari | Registration</title>
+        <title>Summer Camp| Registraiton</title>
       </Helmet>
       <section className="flex flex-col justify-center items-center h-[100%]">
         <h2 className="text-2xl text-center my-5 font-bold">
@@ -77,7 +90,7 @@ const Registration = () => {
                 {...register("password", {
                   required: true,
                   minLength: 6,
-                  pattern: /(?=.*[A-Z])(?=.*[!@#$%^&*])(.{6,})/,    
+                  pattern: /(?=.*[A-Z])(?=.*[!@#$%^&*])(.{6,})/,
                 })}
               />
               {errors.password && errors.password.type === "required" && (
@@ -94,22 +107,24 @@ const Registration = () => {
                   character
                 </span>
               )}
-            </section>  
+            </section>
 
             <section className="flex flex-col space-y-2 ">
               <label className="font-bold" htmlFor="confirmPassword">
                 Confirm Password
               </label>
-              <input className="input input-bordered"
-              type="password"
-              placeholder="retype password"
-              id="confirmPassword"
-              {...register("confirmPassword", {
-                required: true,
-                validate: (value) =>
-                  value === getValues("password") ||
-                  "The Passwords doesnot match",
-              })} />
+              <input
+                className="input input-bordered"
+                type="password"
+                placeholder="retype password"
+                id="confirmPassword"
+                {...register("confirmPassword", {
+                  required: true,
+                  validate: (value) =>
+                    value === getValues("password") ||
+                    "The Passwords doesnot match",
+                })}
+              />
               {errors.confirmPassword?.type === "required" && (
                 <span className="text-red-500">
                   Password Confimation is required
@@ -148,7 +163,6 @@ const Registration = () => {
             />
           </form>
 
-          {error && <p className="text-red-500 my-10">{error}</p>}
           <div>
             <hr className="border mt-5" />
             <SocialLogin></SocialLogin>
