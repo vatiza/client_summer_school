@@ -3,14 +3,14 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { VscEyeClosed } from "react-icons/vsc";
 import toast, { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 import { AuthContex } from "../../../Provider/AuthProvier";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { createAccount } = useContext(AuthContex);
-  
+  const { loginwithemailpass } = useContext(AuthContex);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -20,14 +20,15 @@ const Login = () => {
   const onSubmit = (data) => {
     console.log(data);
 
-    createAccount(data.email, data.password)
+    loginwithemailpass(data.email, data.password)
       .then((result) => {
         const newuser = result.user;
         console.log(newuser);
         toast.success("Login Success");
+        navigate("/");  
       })
       .catch((error) => {
-        toast.error("Login Faild.");  
+        toast.error("Login Faild.");
         console.log(error.message);
       });
   };

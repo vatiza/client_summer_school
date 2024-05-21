@@ -3,7 +3,10 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContex } from "../../../Provider/AuthProvier";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContex);
+  const { user, logOut } = useContext(AuthContex);
+  const handleLogout = () => {
+    logOut().then(() => {});
+  };
 
   const navLink = (
     <>
@@ -107,7 +110,7 @@ const Navbar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <a onClick={handleLogout}>Logout</a>
                 </li>
               </ul>
             </div>

@@ -2,8 +2,11 @@ import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
+import { useContext } from "react";
+import { AuthContex } from "../../../Provider/AuthProvier";
 
 const Registration = () => {
+  const { createAccount, updateUserProfile } = useContext(AuthContex);
   const {
     register,
     handleSubmit,
@@ -22,7 +25,27 @@ const Registration = () => {
     fetch(url, { method: "POST", body: formData })
       .then((res) => res.json())
       .then((img) => {
-        
+        const imgUrl = img.data.display_url;
+        const newUserInfo = {
+          image: imgUrl,
+          name: data.name,
+          email: data.email,
+          regisCourse: [],
+          role: "student",
+        };
+        console.log(newUserInfo, data);
+        createAccount(data.email, data.password)
+          .then((result) => {
+            console.log(result);
+            if (result) {
+              updateUserProfile(data.name, imgUrl).then(() => {
+                console.log("user created Success");
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
       })
       .catch((error) => {
         console.log(error);
